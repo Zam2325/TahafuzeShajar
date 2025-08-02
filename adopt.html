@@ -1,0 +1,165 @@
+<!-- adopt.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adopt a Tree</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Fixed Logo -->
+<div class="fixed-logo">
+  <img src="logo.png" alt="Logo">
+</div>
+
+<!-- Navigation -->
+<header>
+  <nav class="nav-links">
+    <a href="index.html">HOME</a>
+  </nav>
+</header>
+
+<!-- Right-side Report Title -->
+<div class="report-page-title">ADOPT A TREE</div>
+
+<div class="content-wrapper">
+    <div class="auth-container glass">
+      
+      <div class="modal-content">
+        <h2>Login or Sign Up to Adopt a Tree</h2>
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
+
+        <div id="authButtons">
+          <button onclick="login()">Login</button>
+          <button onclick="showSignupFields()">Sign Up</button>
+        </div>
+
+        <div id="signupExtraFields" style="display:none">
+          <label for="treeType">Select Tree Type</label>
+          <select id="treeType">
+            <option value="">--Select--</option>
+            <option value="Shesham">Shesham</option>
+            <option value="Kachnar">Kachnar</option>
+            <option value="Chir Pine">Chir Pine</option>
+            <option value="Neem">Neem</option>
+            <option value="Amaltas">Amaltas</option>
+            <option value="Jacaranda">Jacaranda</option>
+            <option value="Kikar">Kikar</option>
+            <option value="Deodar">Deodar</option>
+            <option value="Paper Mulbury">Paper Mulbury</option>
+          </select>
+
+          <input type="text" id="treeName" placeholder="Name your tree">
+          <button onclick="signup()">Submit</button>
+        </div>
+      </div>
+  </div>
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    import { getDatabase, ref, push, set, get, child } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAMTP8BT_vJV2nmUULZoTfzZeoqFh8hFlA",
+      authDomain: "tahafuzeshajar-tree-campaign.firebaseapp.com",
+      databaseURL: "https://tahafuzeshajar-tree-campaign-default-rtdb.firebaseio.com",
+      projectId: "tahafuzeshajar-tree-campaign",
+      storageBucket: "tahafuzeshajar-tree-campaign.appspot.com",
+      messagingSenderId: "564171586061",
+      appId: "1:564171586061:web:5fe6ccfe2ce5c467d8f344"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    window.showSignupFields = function () {
+      document.getElementById('signupExtraFields').style.display = 'block';
+    };
+
+    window.login = function () {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const userId = userCredential.user.uid;
+
+          get(ref(db, 'adoptions')).then(snapshot => {
+            const data = snapshot.val();
+            for (const key in data) {
+              if (data[key].userId === userId) {
+                window.location.href = `tree-info.html?treeId=${key}`;
+                return;
+              }
+            }
+            alert("No tree found for this user.");
+          });
+        })
+        .catch((error) => {
+          alert("Login Error: " + error.message);
+        });
+    };
+
+    window.signup = function () {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const treeType = document.getElementById('treeType').value;
+      const treeName = document.getElementById('treeName').value;
+
+      if (!treeType || !treeName || /badword|inappropriate/i.test(treeName)) {
+        alert('Please select a tree type and enter an appropriate name.');
+        return;
+      }
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const userId = userCredential.user.uid;
+
+          get(ref(db, 'adoptions')).then(snapshot => {
+            const data = snapshot.val();
+            for (const key in data) {
+              if (data[key].userId === userId) {
+                alert("User already has an adopted tree.");
+                window.location.href = `tree-info.html?treeId=${key}`;
+                return;
+              }
+            }
+
+            const treeRef = push(ref(db, 'adoptions'));
+            const treeId = treeRef.key;
+
+            const treeData = {
+              userId,
+              treeType,
+              treeName,
+              adoptedAt: new Date().toISOString(),
+              healthy: true,
+              notes: [],
+              updates: []
+            };
+
+            set(treeRef, treeData).then(() => {
+              window.location.href = `tree-info.html?treeId=${treeId}`;
+            });
+          });
+        })
+        .catch((error) => {
+          alert("Signup Error: " + error.message);
+        });
+    };
+  </script>
+</body>
+<footer>
+ <footer class="footer">
+    <p>&copy; 2025 Tahafuz-e-Shajar | All Rights Reserved</p>
+    <p>#TahafuzEShajr | #BefriendATree</p>
+    <p>Visit our Instagram page for updates</p>
+  </footer>
+</html>
+
+

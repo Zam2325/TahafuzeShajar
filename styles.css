@@ -1,0 +1,635 @@
+/* Global Reset and Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Helvetica, sans-serif;
+  
+}
+
+body {
+  background: url('background.png') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  font-family: Helvetica, sans-serif;
+  padding-top: 70px; 
+}
+
+.fixed-logo {
+  position: fixed;
+  top: 10px;
+  left: 20px;
+  z-index: 9999;
+  height: 120px;
+  display: flex;
+  align-items: center;
+}
+
+.fixed-logo img {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  height: 120px;  /* Adjust this size as needed */
+  width: auto;
+  z-index: 1000;
+}
+
+
+/* Header */
+header {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0.5rem 1rem;
+   z-index: 1000;
+  height: 50px;
+  border-radius: 12px;
+ 
+}
+/* Nav */
+.nav-links {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #90ee90;
+}
+
+/* Layout Container */
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 3rem 2rem;
+  gap: 2rem;
+  flex-wrap: wrap;
+  align-items: center; /* vertically center content in flex container */
+  padding-top: 100px;
+}
+
+/* About Section with Darker Background */
+.about {
+  flex: 0 0 300px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow:0 4px 20px rgba(41, 40, 40, 0.6);
+  backdrop-filter: blur(14px);
+}
+
+.about h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.about p {
+  line-height: 1.5;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.about a {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.about a img {
+  width: 24px;
+  height: 24px;
+  margin-right: 0.5rem;
+}
+
+/* Action Section */
+.action-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 80vh;
+  position: relative;
+  margin: auto;
+}
+
+
+/* Heading */
+.action h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Button Grid */
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+  background: 20px 20px rgba(255, 255, 255, 0.1);
+  border-radius: 120px;
+  box-shadow: 0 15px 20px rgba(41, 40, 40, 0.6);
+  backdrop-filter: blur(14px);
+  margin-top: 2rem;
+
+}
+
+/* Circular Buttons */
+.circle-button {
+  width: 160px;
+  height: 160px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.circle-button:hover {
+  transform: scale(1.1);
+  background-color: rgba(144, 238, 144, 0.4);
+}
+
+.circle-button img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.3));
+}
+
+.circle-text {
+  margin-top: 0.5rem;
+  color: #fff;
+  opacity: 70%;
+  font-weight: lighter;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.tree-section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 3rem;
+  margin-right: 2rem;
+}
+
+.tree-heading {
+  font-size: 1.8rem;
+  color: #fff;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+}
+.Tree-cards{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+/* Card Container */
+container {
+  background-color: rgba(0, 0, 0, 0); /* Or a slightly tinted color */
+}
+.card-container {
+  position: relative;
+  width: 320px;
+  height: 460px;
+  margin: 2rem auto;
+  perspective: 1000px;
+}
+
+.card {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgb(247, 247, 212);
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  padding: 1.5rem;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.card:not(:last-child) {
+  transform: translateY(10px) scale(0.95);
+}
+
+/* Hover effect */
+.card:hover {
+  transform: scale(1.03);
+  z-index: 10;
+}
+
+/* Tree Image Circle */
+.card img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  border: 4px solid #d9e8de;
+}
+
+/* Tree Name */
+.card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: #25643b;
+}
+
+/* Tree Description */
+.card p {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  margin-bottom: 2rem;
+  text-align: center;
+  color:rgba(35, 93, 41, 0.963)
+}
+
+/* Navigation Buttons */
+.buttons {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  background-color: #25643b;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #1a4c2e;
+}
+
+.footer {
+ position: fixed;
+  bottom: 10px;
+  right: 20px;
+  font-size: 0.75rem;
+  font-family: sans-serif;
+  color: #ccc;
+  opacity: 0.6;
+  z-index: 500;
+}
+/* === Glass Effect Container === */
+.glass-container {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 40px 30px;
+  width: 100%;
+  max-width: 500px;
+  margin: 60px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border: 1px solid rgba(83, 78, 78, 0.3);
+}
+
+/* === Tagline at Bottom === */
+.tagline {
+  text-align: center;
+  font-weight: 300;
+  font-size: 1rem;
+  color: #d0f0d0;
+  margin-bottom: 10px;
+}
+
+/* Report Page Title on left */
+.report-page-title {
+  position: relative;
+  margin-top: 60px; /* Pushes it below header */
+  text-align: left;
+  width: 100%;
+  padding-left: 50px;
+  font-size: 3em;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* Responsive: Smaller and realigned on small screens */
+@media (max-width: 600px) {
+  .report-page-title {
+    font-size: 1.2em;
+    padding-left: 20px;
+    margin-top: 20px;
+  }
+}
+
+/* === Form inside the glass === */
+#report-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#report-form label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #e6f9e6;
+}
+
+#report-form input,
+#report-form textarea,
+#report-form button {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  font-family:Helvetica, sans-serif;
+}
+
+#report-form input,
+#report-form textarea {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+#report-form input::placeholder,
+#report-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+#report-form button {
+  background-color: #267153;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#report-form button:hover {
+  background-color: #2e8b57;
+}
+
+/* === Footer Styling (Optional Enhancement) === */
+.footer {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 0.9em;
+  color: #e0e0e0;
+}
+
+/* Optional: To prevent overlap with logo */
+.fixed-logo img {
+  height: 60px;
+  z-index: 10;
+  position: relative;
+}
+
+/* Glass effect & layout */
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 60px;
+  padding-bottom: 40px;
+  min-height: 100vh;
+  position: relative;
+}
+
+.auth-container.glass {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 30px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.modal-content input,
+.modal-content select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.445);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-family: Helvetica, sans-serif;
+}
+
+/* Makes dropdown options readable */
+.modal-content select option {
+  background-color: #267153;
+  color: #ffffff;
+}
+
+/* Placeholder styling */
+#modal-content input::placeholder,
+#modal-content textarea::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Button styles */
+.modal-content button {
+  background-color: #267153;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+/* Button hover effect */
+#modal-content button:hover {
+  background-color: #2e8b57;
+}
+
+
+.subtext {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #e6f9e6;
+}
+
+.page-title {
+  position: relative;
+  margin-top: 80px; /* Pushes it below header */
+  text-align: left;
+  width: 100%;
+  padding-left: 60px;
+  font-size: 3em;
+  font-weight: 700;
+  color: #ffffff;
+}
+/* Responsive: Smaller and realigned on small screens */
+@media (max-width: 600px) {
+  .report-page-title {
+    font-size: 1.2em;
+    padding-left: 20px;
+    margin-top: 20px;
+  }
+}
+
+/* Logo styling */
+.fixed-logo img {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  height: 80px; /* Increase logo size */
+  width: auto;
+  z-index: 10;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #555;
+  padding: 20px 10px;
+}
+
+
+
+
+/* Responsive for Mobile */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .container {
+    flex-direction: column;
+    padding: 2rem 1rem;
+  }
+
+  .about,
+  .action-wrapper {
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .buttons {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .circle-button {
+    width: 100px;
+    height: 100px;
+  }
+
+  .circle-button img {
+    width: 80%;
+    height: 80%;
+  }
+
+  .circle-text {
+    font-size: 0.9rem;
+  }
+
+ @media (max-width: 768px) {
+  .tree-section {
+    align-items: center;
+    margin-right: 0;
+  }
+
+  .tree-heading {
+    margin-right: 0;
+    text-align: center;
+  }
+}
+@media (max-width: 600px) {
+  .glass-container {
+    padding: 30px 20px;
+    margin: 40px 16px;
+    border-radius: 15px;
+  }
+
+  .top-right-title {
+    top: 90px;
+    right: 16px;
+    font-size: 1.2em;
+    text-align: right;
+    max-width: 160px;
+  }
+
+  .tagline {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  #report-form label {
+    font-size: 0.9rem;
+  }
+
+  #report-form input,
+  #report-form textarea {
+    font-size: 0.95rem;
+  }
+
+  #report-form button {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+
+  .fixed-logo img {
+    height: 50px;
+  }
+
+  .footer {
+    font-size: 0.75rem;
+    padding: 0 10px;
+  }
+}
+}
+
+

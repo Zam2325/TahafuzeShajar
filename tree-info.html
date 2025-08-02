@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Adopted Tree</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Fixed Logo -->
+  <div class="fixed-logo">
+    <img src="logo.png" alt="Logo">
+  </div>
+
+  <!-- Navigation -->
+  <header>
+    <nav class="nav-links">
+      <a href="index.html">HOME</a>
+    </nav>
+  </header>
+
+  <!-- Right-side Report Title -->
+  <div class="report-page-title">Your Adopted Tree</div>
+
+  <!-- Glass Effect Container -->
+  <div class="glass-container">
+    <div id="treeInfo">
+      <h2>Your Adopted Tree</h2>
+      <p><strong>Name:</strong> <span id="treeName">Loading...</span></p>
+      <p><strong>Type:</strong> <span id="treeType">Loading...</span></p>
+      <p><strong>Last Watered:</strong> <span id="lastWatered">--</span></p>
+    </div>
+
+    <main>
+      <section>
+        <h3>💧 Watering</h3>
+        <button onclick="updateWatering()">Mark as Watered</button>
+        <button onclick="addWateringToCalendar()">Add Watering Reminder 🗕️</button>
+      </section>
+
+      <section>
+        <h3>📓 Progress Notes</h3>
+        <textarea id="progressNote" placeholder="Write notes about your tree..."></textarea>
+        <button onclick="addNote()">Add Note</button>
+        <ul id="notesList"></ul>
+      </section>
+
+      <section>
+        <h3>📸 Tree Photo</h3>
+        <input type="file" id="photoInput" accept="image/*">
+        <button onclick="uploadPhoto()">Upload Photo</button>
+        <div id="photoGallery"></div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    import { getDatabase, ref, onValue, update, push, set } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+    import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-storage.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAMTP8BT_vJV2nmUULZoTfzZeoqFh8hFlA",
+      authDomain: "tahafuzeshajar-tree-campaign.firebaseapp.com",
+      databaseURL: "https://tahafuzeshajar-tree-campaign-default-rtdb.firebaseio.com",
+      projectId: "tahafuzeshajar-tree-campaign",
+      storageBucket: "tahafuzeshajar-tree-campaign.appspot.com",
+      messagingSenderId: "564171586061",
+      appId: "1:564171586061:web:5fe6ccfe2ce5c467d8f344"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+    const storage = getStorage(app);
+
+    let currentTreeId = null;
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const userId = user.uid;
+        const adoptionsRef = ref(db, "adoptions");
+
+        onValue(adoptionsRef, (snapshot) => {
+          let treeFound = false;
+          snapshot.forEach((child) => {
+            const data = child.val();
+            if (data.userId === userId) {
+              treeFound = true;
+              currentTreeId = child.key;
+              document.getElementById("treeName").textContent = data.treeName;
+              document.getElementById("treeType").textContent = data.treeType;
+              if (data.lastWatered) {
+                document.getElementById("lastWatered").textContent = data.lastWatered;
+              }
+              if (data.notes) {
+                Object.values(data.notes).forEach(note => {
+                  const li = document.createElement("li");
+                  li.textContent = note;
+                  document.getElementById("notesList").appendChild(li);
+                });
+              }
+            }
+          });
+
+          if (!treeFound) {
+            document.getElementById("treeInfo").innerHTML = "<p>No adopted tree found for this user.</p>";
+          }
+        });
+      } else {
+        window.location.href = "adopt.html";
+      }
+    });
+
+    window.logoutUser = function () {
+      signOut(auth).then(() => {
+        window.location.href = "adopt.html";
+      });
+    };
+
+    window.updateWatering = function () {
+      if (!currentTreeId) return;
+      const now = new Date().toLocaleString();
+      const treeRef = ref(db, `adoptions/${currentTreeId}`);
+      update(treeRef, { lastWatered: now });
+      document.getElementById('lastWatered').textContent = now;
+    };
+
+    window.addNote = function () {
+      if (!currentTreeId) return;
+      const note = document.getElementById('progressNote').value;
+      if (note.trim() === '') return;
+      const noteRef = push(ref(db, `adoptions/${currentTreeId}/notes`));
+      set(noteRef, note);
+      const li = document.createElement('li');
+      li.textContent = note;
+      document.getElementById('notesList').appendChild(li);
+      document.getElementById('progressNote').value = '';
+    };
+
+    window.uploadPhoto = function () {
+      if (!currentTreeId) return;
+      const fileInput = document.getElementById('photoInput');
+      const file = fileInput.files[0];
+      if (!file) return;
+      const fileRef = storageRef(storage, `treePhotos/${currentTreeId}/${file.name}`);
+
+      uploadBytes(fileRef, file).then(snapshot => {
+        return getDownloadURL(snapshot.ref);
+      }).then(url => {
+        const gallery = document.getElementById('photoGallery');
+        const img = document.createElement('img');
+        img.src = url;
+        img.style.maxWidth = '200px';
+        gallery.appendChild(img);
+      }).catch(err => {
+        alert("Photo upload failed: " + err.message);
+      });
+    };
+
+    window.addWateringToCalendar = function () {
+      const title = encodeURIComponent("Water Your Tree 🌱");
+      const start = new Date();
+      start.setDate(start.getDate() + 1);
+      const startDate = start.toISOString().replace(/-|:|\.\d+/g, '').slice(0, 15) + '00Z';
+      const end = new Date(start);
+      end.setHours(end.getHours() + 1);
+      const endDate = end.toISOString().replace(/-|:|\.\d+/g, '').slice(0, 15) + '00Z';
+
+      const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=Time%20to%20water%20your%20adopted%20tree!`;
+      window.open(url, '_blank');
+    };
+  </script>
+</body>
+</html>
+
+
+

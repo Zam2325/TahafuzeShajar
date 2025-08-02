@@ -1,0 +1,180 @@
+<!-- report.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Report Tree Theft</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js"></script>
+</head>
+<body>
+
+  <!-- Fixed Logo -->
+<div class="fixed-logo">
+  <img src="logo.png" alt="Logo">
+</div>
+
+<!-- Navigation -->
+<header>
+  <nav class="nav-links">
+    <a href="index.html">HOME</a>
+  </nav>
+</header>
+
+<!-- Right-side Report Title -->
+<div class="report-page-title">REPORT PAGE</div>
+
+  <!-- Centered Glass Container -->
+  <div class="glass-container">
+    <h2 class="tagline">Report now and save trees — every report helps protect our future!</h2>
+
+    <form id="report-form" onsubmit="submitReport(event)">
+      <label for="name">Your Name:</label>
+      <input type="text" id="name" required>
+
+      <label for="idCard">ID Card Number:</label>
+      <input type="text" id="idCard" maxlength="13" pattern="\d{13}" required placeholder="Enter 13-digit CNIC number"required>
+
+
+      <label for="location">Location of Incident:</label>
+      <input type="text" id="location" required>
+
+      <label for="description">Description of Incident:</label>
+      <textarea id="description" rows="4" required></textarea>
+
+      <label for="media">Upload Image/Video (optional):</label>
+      <input type="file" id="media" accept="image/*,video/*">
+
+      <button type="submit">Submit Report</button>
+    </form>
+  </div>
+
+  <footer class="footer">
+    <p>&copy; 2025 Tahafuz-e-Shajar | All Rights Reserved</p>
+    <p>#TahafuzEShajr | #BefriendATree</p>
+    <p>Visit our Instagram page for updates</p>
+  </footer>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAMTP8BT_vJV2nmUULZoTfzZeoqFh8hFlA",
+      authDomain: "tahafuzeshajar-tree-campaign.firebaseapp.com",
+      databaseURL: "https://tahafuzeshajar-tree-campaign-default-rtdb.firebaseio.com",
+      projectId: "tahafuzeshajar-tree-campaign",
+      storageBucket: "tahafuzeshajar-tree-campaign.firebasestorage.app",
+      messagingSenderId: "564171586061",
+      appId: "1:564171586061:web:5fe6ccfe2ce5c467d8f344"
+    };
+
+    const app = firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    const storage = firebase.storage();
+
+    function submitReport(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const idCard = document.getElementById('idCard').value;
+      const location = document.getElementById('location').value;
+      const description = document.getElementById('description').value;
+      const file = document.getElementById('media').files[0];
+
+      const reportRef = database.ref('reports').push();
+      const reportId = reportRef.key;
+
+      if (file) {
+        const storageRef = storage.ref('report_media/' + reportId + '_' + file.name);
+        storageRef.put(file).then(snapshot => {
+          snapshot.ref.getDownloadURL().then(downloadURL => {
+            reportRef.set({
+              name,
+              idCard,
+              location,
+              description,
+              mediaURL: downloadURL,
+              timestamp: Date.now()
+            });
+            document.getElementById('report-form').reset();
+            alert('Report submitted successfully. Thank you!');
+          });
+        });
+      } else {
+        reportRef.set({
+          name,
+          idCard,
+          location,
+          description,
+          timestamp: Date.now()
+        });
+        document.getElementById('report-form').reset();
+        alert('Report submitted successfully. Thank you!');
+      }
+    }
+  </script>
+  <script>
+  const badWords = ["badword1", "inappropriate", "abuse"]; // Add more as needed
+
+  function containsBadWords(text) {
+    const lowerText = text.toLowerCase();
+    return badWords.some(word => lowerText.includes(word));
+  }
+
+  function submitReport(event) {
+    event.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const idCard = document.getElementById('idCard').value;
+    const location = document.getElementById('location').value;
+    const description = document.getElementById('description').value;
+    const file = document.getElementById('media').files[0];
+
+    // Check ID Card length
+    if (!/^\d{13}$/.test(idCard)) {
+      alert("Please enter a valid 13-digit CNIC number.");
+      return;
+    }
+
+    // Check for inappropriate content
+    if (containsBadWords(name) || containsBadWords(location) || containsBadWords(description)) {
+      alert("Please remove inappropriate words from the input.");
+      return;
+    }
+
+    const reportRef = database.ref('reports').push();
+    const reportId = reportRef.key;
+
+    if (file) {
+      const storageRef = storage.ref('report_media/' + reportId + '_' + file.name);
+      storageRef.put(file).then(snapshot => {
+        snapshot.ref.getDownloadURL().then(downloadURL => {
+          reportRef.set({
+            name: name,
+            idCard: idCard,
+            location: location,
+            description: description,
+            mediaURL: downloadURL,
+            timestamp: Date.now()
+          });
+          document.getElementById('report-form').reset();
+          alert('Report submitted successfully. Thank you!');
+        });
+      });
+    } else {
+      reportRef.set({
+        name: name,
+        idCard: idCard,
+        location: location,
+        description: description,
+        timestamp: Date.now()
+      });
+      document.getElementById('report-form').reset();
+      alert('Report submitted successfully. Thank you!');
+    }
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tahafuz e Shajr</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAMTP8BT_vJV2nmUULZoTfzZeoqFh8hFlA",
+      authDomain: "tahafuzeshajar-tree-campaign.firebaseapp.com",
+      projectId: "tahafuzeshajar-tree-campaign",
+      storageBucket: "tahafuzeshajar-tree-campaign.appspot.com",
+      messagingSenderId: "564171586061",
+      appId: "1:564171586061:web:5fe6ccfe2ce5c467d8f344"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+  </script>
+  <style> 
+    .instagram-icon {
+  width: 24px;
+  height: 24px;
+}
+  </style>
+</head>
+
+<div class="fixed-logo">
+  <img src="logo.png" alt="Logo">
+</div>
+
+<body>
+  <header>
+    <nav class="nav-links">
+      <a href="adopt.html">ADOPT A TREE</a> |
+      <a href="report.html">REPORT TREE THEFT</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="about">
+      <h2>About us</h2>
+      <p>
+        At Tahafuz e Shajar, we believe that protecting trees is protecting life.
+        Our mission is to reconnect people with nature by making tree care personal, meaningful,
+        and accessible. Through our digital platform, we invite individuals to adopt a tree,
+        give it a name, and become its guardian. Together, we are building a greener future—
+        one tree at a time.
+      </p>
+      <a href="https://www.instagram.com/tahafuz.e.shajr/?igsh=MW1ndXcxOHl4NGdsNA%3D%3D" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram Icon" />
+        @tahafuz.e.shajar
+      </a>
+    </div>
+
+    <div class="action">
+      <h2>PROTECT YOUR URBAN NATURE</h2>
+      <div class="buttons">
+        <div>
+          <a href="adopt.html" class="circle-button">
+            <img src="adopt icon.png" alt="Adopt Icon">
+          </a>
+          <div class="circle-text">Adopt a Tree</div>
+        </div>
+        <div>
+          <a href="report.html" class="circle-button">
+            <img src="report icon.png" alt="Report Icon">
+          </a>
+          <div class="circle-text">Report Tree Theft</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <body>
+   <div class="tree-section">
+  <h2 class="tree-heading">Trees of Islamabad</h2>
+  <div class="card-container">
+    
+    <div class="cards">
+      <div class="card">
+        <img src="images/sheesham.png" alt="Shesham" />
+        <h3>Shesham (Dalbergia Sissoo)</h3>
+        <p><strong>Info:</strong> A fast-growing tree known for its durable wood and shade.</p>
+        <p><strong>Care:</strong> Requires full sun, well-drained soil, and occasional pruning.</p>
+      </div>
+      <div class="card">
+        <img src="images/kachnar.png" alt="Kachnar" />
+        <h3>Kachnar</h3>
+        <p><strong>Info:</strong> Ornamental tree with beautiful pink or white flowers.</p>
+        <p><strong>Care:</strong> Prefers sunny locations and moderate watering.</p>
+      </div>
+      <div class="card">
+        <img src="images/chir pine.png" alt="Chir Pine" />
+        <h3>Chir Pine</h3>
+        <p><strong>Info:</strong> Tall conifer found in hilly areas, with needle-like leaves.</p>
+        <p><strong>Care:</strong> Needs full sun and tolerates poor soil conditions.</p>
+      </div>
+      <div class="card">
+        <img src="images/neem.png" alt="Neem" />
+        <h3>Neem</h3>
+        <p><strong>Info:</strong> Medicinal tree with antibacterial properties.</p>
+        <p><strong>Care:</strong> Requires hot climates and little water once established.</p>
+      </div>
+      <div class="card">
+        <img src="images/amaltas.png" alt="Amaltas" />
+        <h3>Amaltas</h3>
+        <p><strong>Info:</strong> Known for its cascading yellow flowers.</p>
+        <p><strong>Care:</strong> Grows well in full sunlight and well-drained soil.</p>
+      </div>
+      <div class="card">
+        <img src="images/jacaranda.png" alt="Jacaranda" />
+        <h3>Jacaranda</h3>
+        <p><strong>Info:</strong> Tropical tree with stunning purple blossoms.</p>
+        <p><strong>Care:</strong> Needs warmth, full sunlight, and moist soil.</p>
+      </div>
+      <div class="card">
+        <img src="images/kikar.png" alt="Kikar" />
+        <h3>Kikar</h3>
+        <p><strong>Info:</strong> Thorny tree common in dry regions with yellow flowers.</p>
+        <p><strong>Care:</strong> Thrives in dry climates, minimal watering required.</p>
+      </div>
+      <div class="card">
+        <img src="images/deodar.png" alt="Deodar" />
+        <h3>Deodar</h3>
+        <p><strong>Info:</strong> Himalayan cedar with graceful evergreen branches.</p>
+        <p><strong>Care:</strong> Prefers cooler climates and well-drained soil.</p>
+      </div>
+      <div class="card">
+        <img src="images/paper mulberry.png" alt="Paper Mulbury" />
+        <h3>Paper Mulbury</h3>
+        <p><strong>Info:</strong> Fast-growing tree used in handmade paper production.</p>
+        <p><strong>Care:</strong> Requires moderate watering and sunlight.</p>
+      </div>
+    </div>
+
+  
+  </div>
+
+  <div class="card-nav">
+    <button id="left">←</button>
+    <button id="right">→</button>
+  </div>
+</div>
+</body>
+ <script src="script.js"></script>
+ 
+ <footer>
+ <footer class="footer">
+    <p>&copy; 2025 Tahafuz-e-Shajar | All Rights Reserved</p>
+    <p>#TahafuzEShajr | #BefriendATree</p>
+    <p>Visit our Instagram page for updates</p>
+  </footer>
+</body>
+</html>
+
+
+
